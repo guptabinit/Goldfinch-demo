@@ -15,11 +15,14 @@ import {
   Settings,
   Home,
   X,
+  LogOut,
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useStaffAuth } from "@/lib/auth/staff-auth-context"
+import { useToast } from "@/components/ui/use-toast"
 
 interface ManagerSidebarProps {
   open: boolean
@@ -28,6 +31,9 @@ interface ManagerSidebarProps {
 
 export function ManagerSidebar({ open, setOpen }: ManagerSidebarProps) {
   const pathname = usePathname()
+  const { logout } = useStaffAuth()
+  const { toast } = useToast()
+  const router = useRouter()
 
   const navigation = [
     { name: "Dashboard", href: "/staff/manager/dashboard", icon: Home },
@@ -42,6 +48,15 @@ export function ManagerSidebar({ open, setOpen }: ManagerSidebarProps) {
     { name: "Alerts", href: "/staff/manager/alerts", icon: Bell },
     { name: "Settings", href: "/staff/manager/settings", icon: Settings },
   ]
+
+  const handleLogout = () => {
+    logout()
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out",
+    })
+    router.push("/staff/login")
+  }
 
   return (
     <>
@@ -105,6 +120,9 @@ export function ManagerSidebar({ open, setOpen }: ManagerSidebarProps) {
               <span className="ml-2 text-sm text-muted-foreground">v1.2.0</span>
             </div>
             {!open && <BarChart3 className="h-5 w-5 text-muted-foreground hidden lg:block" />}
+            <Button variant="ghost" size="icon" onClick={handleLogout} title="Logout">
+              <LogOut className="h-5 w-5 text-muted-foreground" />
+            </Button>
           </div>
         </div>
       </div>
