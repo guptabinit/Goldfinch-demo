@@ -17,9 +17,6 @@ function StaffLayoutContent({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Add a small delay to ensure localStorage is properly checked
     const authCheckTimeout = setTimeout(() => {
-      if (!isLoading && !isAuthenticated && !pathname.includes("/staff/login")) {
-        router.push("/staff/login")
-      }
 
       // Redirect to role-specific dashboard if user is on general staff pages but has a specialized role
       if (!isLoading && isAuthenticated && user) {
