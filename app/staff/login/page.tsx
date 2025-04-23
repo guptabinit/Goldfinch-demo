@@ -34,11 +34,11 @@ function LoginContent() {
 
       // Redirect based on role
       if (user?.role === "hod") {
-        router.push("/staff/hod/dashboard")
+        window.location.href = "/staff/hod/dashboard"
       } else if (user?.role === "manager") {
-        router.push("/staff/manager/dashboard")
+        window.location.href = "/staff/manager/dashboard"
       } else {
-        router.push("/staff/dashboard")
+        window.location.href = "/staff/dashboard"
       }
     } catch (error) {
       toast({
